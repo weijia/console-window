@@ -2,6 +2,7 @@ import dbus.service
 import dbusServiceBase
 import localLibSys
 import localLibs.windows.changeNotifyThread as changeNotifyThread
+import localLibs.logWin.fileTools as fileTools
 
 ################################################################
 #Required !!! Override the following interface name
@@ -48,10 +49,11 @@ class dirMonitorService(dbusServiceBase.dbusServiceBase):
         #newThread = changeNotifyOnDbusThread(dir2Monitor)
         #newThread.start()
         #self.notifyThreads[dir2Monitor] = newThread
-        '''
+        pa = fileTools.findFileInProduct('dirMonitor.py')
         import appStarterForDbusTest
-        appStarterForDbusTest.startAppFromDbus(['D:\\apps\\mongodb\\mongodb-win32-i386-1.6.5\\bin\\startMongoDb.bat'])
-        '''
+        ru = [pa, '-p', "%s"%dir2Monitor]
+        print ru
+        appStarterForDbusTest.startAppFromDbus(ru)
         return "OK"
         
     @dbus.service.method(dbus_interface=INTERFACE_NAME,

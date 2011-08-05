@@ -1,7 +1,8 @@
 import dbus.service
 import dbus
 
-BUS_NAME_NAME = 'com.wwjufsdatabase.appStarterService'
+#BUS_NAME_NAME = 'com.wwjufsdatabase.appStarterService'
+BUS_NAME_NAME = 'com.wwjufsdatabase.dirMonitorService'
 INTERFACE_NAME = 'com.wwjufsdatabase.dirMonitorService'
 
 def monitorFromDbus(pathAndParam):

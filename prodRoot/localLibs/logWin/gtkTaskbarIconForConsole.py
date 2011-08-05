@@ -41,9 +41,14 @@ class MyStatusIcon(gtk.StatusIcon):
                 self.connect('activate', self.on_popup_menu)
                 self.connect('popup-menu', self.on_popup_menu)
                 self.parent = parent
+                self.actionTextMapping = {}
                 
         def addMenuItem(self, menuText):
-                newMenu = '''
+                copyStr = menuText
+                menuActionName = copyStr.replace('"', '')
+                #menuActionName = "testMenuAction"
+                self.actionTextMapping[menuActionName] = menuText
+                newMenu = u'''
                         <ui>
                          <menubar name="Menubar">
                           <menu action="Menu">
@@ -51,8 +56,8 @@ class MyStatusIcon(gtk.StatusIcon):
                           </menu>
                          </menubar>
                         </ui>
-                '''%menuText
-                actions = [('%s'%menuText, None, menuText, None, 'open consle window', self.on_menuAction)]
+                '''%menuActionName
+                actions = [('%s'%menuActionName, None, menuText, None, 'open consle window', self.on_menuAction)]
                 import uuid
                 ag = gtk.ActionGroup(str(uuid.uuid4()))
                 ag.add_actions(actions)
@@ -70,7 +75,7 @@ class MyStatusIcon(gtk.StatusIcon):
                 self.menu.popup(None, None, None, button, time)
         def on_menuAction(self, data):
                 #print data.get_name()
-                self.parent.clickM(data.get_name())
+                self.parent.clickM(self.actionTextMapping[data.get_name()])
 
         '''
         def on_action(self, data):

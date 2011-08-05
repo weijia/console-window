@@ -93,6 +93,10 @@ class dropRunWnd(gtkDropTarget.dropTarget, gtkDragMove.dragMove):
         paN = paN + '-' + str(cnt)
           
       self.mD[paN] = t
+      #import os
+      #appName = os.path.basename(param[0])
+      #paN = appName + str(param)
+
       self.tL[t] = self.icon.addMenuItem(paN)
       
 def startApplicationsNoReturn(l):
