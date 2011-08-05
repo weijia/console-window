@@ -2,36 +2,27 @@ import scriptRunnerV2 as scriptRunner
 import gobject
 import threading
 import gtk
-#from multiprocessing.managers import BaseManager
-#from multiprocessing import Process, Queue
-#import appStarterForDbusV2 as appStarterForDbus
-
-#class QueueManager(BaseManager): pass
+import appStarterForDbusV2 as appStarterForDbus
 
 
-# class scriptLauncherDbusTherd(threading.Thread):
-    # def __init__(self, target):
-        # self.target = target
-        # threading.Thread.__init__(self)
-    # def run(self):
-        # #Connect to server
-        # appStarterForDbus.startAppRunnerService(self.target)
-        # print 'quit running appStarterForDbus.startAppRunnerService(self.target)'
+
+class scriptLauncherDbusTherd(threading.Thread):
+    def __init__(self, target):
+        self.target = target
+        threading.Thread.__init__(self)
+    def run(self):
+        #Connect to server
+        appStarterForDbus.startAppRunnerService(self.target)
+        print 'quit running appStarterForDbus.startAppRunnerService(self.target)'
 
 
 class advScriptRunner(scriptRunner.dropRunWnd):
     def startScriptRunnerApp(self):
         scriptRunner.dropRunWnd.startScriptRunnerApp(self)
-        #self.dbusThread = scriptLauncherDbusTherd(self)
-        #self.dbusThread.start()
+        self.dbusThread = scriptLauncherDbusTherd(self)
+        self.dbusThread.start()
     def quitAll(self):
-        #import dbus
-        #bus = dbus.SessionBus()
-        #proxy = bus.get_object('com.wwjufsdatabase.appStarterService',
-        #                      '/appStarter')
-        #print 'calling quit all'
-        #print proxy.exitService()
-        pass
+        appStarterForDbus.stopAllService()
         
     def addAppToIdleRunner(self, param):
         print 'callback called'
@@ -55,7 +46,7 @@ def startApplicationsNoReturn(l):
     gtk.main()
     gtk.gdk.threads_leave()
     print 'after gtk.gdk.threads_leave()'
-    #d.quitAll()
+    d.quitAll()
     print 'final quit'
     return 0
     

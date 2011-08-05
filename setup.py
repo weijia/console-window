@@ -20,6 +20,7 @@ setup(name = "consoleWin",
         executables =   [
                          Executable("consoleWin.py"),
                          #Executable("dbusTest.py"),
+                         Executable("appStarterForDbusTest.py"),
                          #Executable("desktopApp\\onlineSync\\encytpedZipSyncTaskV2.py", path = 'D:\\codes\\python\\weijia_ufs\\prodRoot')
                         ],
         options =   {"build_exe":   {"includes":includes, 'include_files':includefiles, "bin_excludes":excludefiles, 

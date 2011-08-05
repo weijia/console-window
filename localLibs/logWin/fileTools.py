@@ -5,5 +5,5 @@ def findFileInProduct(filename):
         if filename in filenames:
             print 'find file:', os.path.join(dirpath, filename)
             return os.path.join(dirpath, filename)
-    
+    return None
 

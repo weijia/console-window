@@ -59,20 +59,22 @@ class dropRunWnd(gtkDropTarget.dropTarget, gtkDragMove.dragMove):
 
   def close_application(self, widget):
         self.window.hide()
-        try:
-            from dbus.mainloop.glib import threads_init
-            threads_init()
-
-            import appStarterForDbusQuitApp
-            print 'calling stopService'
-            appStarterForDbusQuitApp.stopService()
-        except:
-            pass
-        
+        # try:
+            # print 'calling close_application'
+            # from dbus.mainloop.glib import threads_init
+            # threads_init()
+            # print 'after threads_init'
+            # import appStarterForDbusQuitApp
+            # print 'calling stopService'
+            # appStarterForDbusQuitApp.stopService()
+        # except:
+            # pass
+        print 'killing applications'
         for i in self.tL.keys():
             i.close_application(widget)
         self.icon.set_visible(False)
         gtk.main_quit()
+        print 'all application killed, after main_quit'
       
   def startApp(self, pa):
       '''
