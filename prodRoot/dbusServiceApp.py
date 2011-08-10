@@ -9,10 +9,10 @@ import gobject
 BUS_NAME_NAME = 'com.wwjufsdatabase.dirMonitorService'
 
 class dbusServiceApp:
-    def startAppRunnerService(self, serviceObjName = '/appStarter', serviceClass = appStarterForDbus.appStarter):
+    def startAppRunnerService(self, serviceObjName = '/appStarter', serviceClass = appStarterForDbus.appStarter, busName = BUS_NAME_NAME):
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
         session_bus = dbus.SessionBus()
-        name = dbus.service.BusName(BUS_NAME_NAME, session_bus)
+        name = dbus.service.BusName(busName, session_bus)
         mainloop = gobject.MainLoop()
         
         ############################

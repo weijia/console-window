@@ -7,7 +7,7 @@ import localLibs.logWin.fileTools as fileTools
 ################################################################
 #Required !!! Override the following interface name
 INTERFACE_NAME = 'com.wwjufsdatabase.dirMonitorService'
-BUS_NAME_NAME = 'com.wwjufsdatabase.appStarterService'
+BUS_NAME_NAME = 'com.wwjufsdatabase.dirMonitorService'
 
 
 class changeNotifyOnDbusThread(changeNotifyThread.changeNotifyThread):
