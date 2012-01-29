@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 # example textview-basic.py
+import sys
+import os
 
 
 try:  
@@ -11,7 +13,7 @@ except:
   
 try:  
   import gtk  
-  import gtk.glade  
+  import gtk.glade
 except:  
   print "You need to install pyGTK or GTKv2"  
   print "or set your PYTHONPATH correctly."  
@@ -48,6 +50,7 @@ class consoleWnd:
     def updateView(self, param):
         buf = self.textview.get_buffer()
         buf.insert(buf.get_end_iter(), self.data)
+        self.data = ''
         
     def __init__(self, parent):
         gladefile = "consoleWnd.glade"
@@ -93,7 +96,7 @@ class consoleWnd:
         self.textview = self.builder.get_object(self.textWndName)
         self.topMostFlag = True
         self.topMost(None)
-
+        
         '''
         box1 = gtk.VBox(False, 0)
         window.add(box1)
@@ -125,6 +128,7 @@ class consoleWnd:
         '''
         self.wC = wndConsole()
         #window.show()
+        self.isMinimized = True
         self.window.hide()
         
     def topMost(self, widget):
@@ -132,6 +136,7 @@ class consoleWnd:
         self.window.set_keep_above(self.topMostFlag)
 
     def min(self, data):
+        self.isMinimized = True
         self.window.hide()
     '''
     def new_window_state(self, widget, event):
@@ -150,11 +155,10 @@ class consoleWnd:
     def runApp(self, widget):
         self.quickStart('D:\\sandbox\\developing\\proxySmart\\twistedProxy.py')
     def quickStart(self, appPath):
-        import os
         p = os.path.dirname(appPath)
         self.startApp(p, [appPath])
     def startApp(self, cwd = 'D:\\code\\python\\developing\\ufs', progAndParm = ['D:\\code\\python\\developing\\ufs\\webserver-cgi.py']):
-        print '------------------------------',progAndParm
+        #print '------------------------------',progAndParm
         self.wC.runConsoleApp(self, cwd, progAndParm)
     def startAppWithParam(self, progAndParm = ['D:\\code\\python\\developing\\ufs\\webserver-cgi.py']):
         cwd = os.path.dirname(progAndParm[0])

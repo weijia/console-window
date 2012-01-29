@@ -1,9 +1,8 @@
-import scriptRunnerV2 as scriptRunner
 import gobject
 import threading
 import gtk
 import appStarterForDbusV2 as appStarterForDbus
-
+import advScriptRunnerV3 as advScriptRunner
 
 
 class scriptLauncherDbusTherd(threading.Thread):
@@ -14,34 +13,17 @@ class scriptLauncherDbusTherd(threading.Thread):
         #Connect to server
         appStarterForDbus.startAppRunnerService(self.target)
         print 'quit running appStarterForDbus.startAppRunnerService(self.target)'
-
-
-class advScriptRunner(scriptRunner.dropRunWnd):
-    def startScriptRunnerApp(self):
-        scriptRunner.dropRunWnd.startScriptRunnerApp(self)
-        self.dbusThread = scriptLauncherDbusTherd(self)
-        self.dbusThread.start()
-    def quitAll(self):
+    def stop(self):
         appStarterForDbus.stopAllService()
-        
-    def addAppToIdleRunner(self, param):
-        print 'callback called'
-        gobject.idle_add(self.lauchServerLaunch, param)
-        import time
-        time.sleep(0.1)
-
-    def lauchServerLaunch(self, param):
-        self.startAppWithParam(param)
-    
 
 def startApplicationsNoReturn(l):
     '''
     from dbus.mainloop.glib import threads_init
     threads_init()
     '''
-    d = advScriptRunner()
+    d = advScriptRunner.advScriptRunner()
     d.initialApps = l
-    d.startScriptRunnerApp()
+    d.startScriptRunnerApp(scriptLauncherDbusTherd)
     gtk.gdk.threads_enter()
     gtk.main()
     gtk.gdk.threads_leave()
@@ -49,7 +31,7 @@ def startApplicationsNoReturn(l):
     d.quitAll()
     print 'final quit'
     return 0
-    
+
   
 def main():
     startApplicationsNoReturn([])

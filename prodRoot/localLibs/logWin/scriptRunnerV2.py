@@ -2,7 +2,10 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 import gtkTaskbarIconForConsole
-import gtkTxtWndMod
+#import gtkTxtWndMod
+import logWnd
+import localLibSys
+import localLibs.logSys.logDir as logDir
 import gtkDropTarget
 import gtkDragMove
 import fileTools
@@ -28,7 +31,7 @@ class dropRunWnd(gtkDropTarget.dropTarget, gtkDragMove.dragMove):
       wid.drag_get_data(context, context.targets[-1], time)
       return True
   def clickM(self, mTxt):
-      self.mD[mTxt].window.show()
+      self.mD[mTxt].show()
   def consoleClose(self, t):
       self.icon.rmMenuItem(self.tL[t])
       for i in self.mD.keys():
@@ -58,7 +61,7 @@ class dropRunWnd(gtkDropTarget.dropTarget, gtkDragMove.dragMove):
       #w.set_skip_taskbar_hint(True)#Hide taskbar icon
 
   def close_application(self, widget):
-        self.window.hide()
+        #self.window.hide()
         # try:
             # print 'calling close_application'
             # from dbus.mainloop.glib import threads_init
@@ -83,7 +86,8 @@ class dropRunWnd(gtkDropTarget.dropTarget, gtkDragMove.dragMove):
       param = [pa]
       self.startAppWithParam(param)
   def startAppWithParam(self, param):
-      t = gtkTxtWndMod.consoleWnd(self)
+      l = logDir.logDir(str(param))
+      t = logWnd.logWnd(self, l.getLogFilePath())
       t.startAppWithParam(param)
       cnt = 1
       paN = str(param)

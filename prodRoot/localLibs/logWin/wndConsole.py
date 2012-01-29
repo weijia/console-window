@@ -49,7 +49,7 @@ class wndConsole:
     self.progAndParm = progAndParm
     #print target
     #print '-------------------------',progAndParm
-    print cwd
+    #print cwd
     #self.prog = ['D:\\cygwin\\bin\\ls.exe','-l']
     ext = checkExistPath.split(".",2)
     if (1 != len(ext)) and ("py" == ext[1]):
@@ -76,17 +76,17 @@ class wndConsole:
     #print self.prog
     #self.SetTitle(progAndParm[0])
     if True:#try:
-      print self.prog
+      #print self.prog
       p = subprocess.Popen(self.prog, cwd = self.cwd, stdout = subprocess.PIPE, stderr = subprocess.PIPE, bufsize=0, creationflags = CREATE_NO_WINDOW)
       self.pList.append(p)
-      print 'taskid:%d, pid:%d'%(int(p._handle), int(p.pid))
+      #print 'taskid:%d, pid:%d'%(int(p._handle), int(p.pid))
       thr1 = taskConsoleThread(target, p.stdout, progAndParm[0])
       thr1.start()
       self.threadList.append(thr1)
       thr2 = taskConsoleThread(target, p.stderr, progAndParm[0])
       thr2.start()
       self.threadList.append(thr2)
-      print 'launch ok'
+      #print 'launch ok'
     else:#except:
       print 'launch exception'
     #self.appStarted = True
